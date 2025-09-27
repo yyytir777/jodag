@@ -1,6 +1,6 @@
 package jodag.generator;
 
-import jodag.exception.GeneratorException;
+import jodag.generator.orm.ORMType;
 
 
 public class EntityGenerator<T> extends AbstractGenerator<T> {
@@ -18,14 +18,18 @@ public class EntityGenerator<T> extends AbstractGenerator<T> {
      */
     @Override
     public T get() {
-        try {
-            return entityInstanceCreator.createInstance(type, GenerateType.SELF);
-        } catch (IllegalArgumentException iae) {
-            throw new GeneratorException("entity의 필드와 생성한 값의 타입이 일치하지 않습니다.", iae);
-        }
+        return entityInstanceCreator.createInstance(type, GenerateType.SELF);
     }
 
     public T get(GenerateType generateType) {
         return entityInstanceCreator.createInstance(type, generateType);
+    }
+
+    public T get(ORMType ormType) {
+        return entityInstanceCreator.createInstance(ormType, type, GenerateType.SELF);
+    }
+
+    public T get(ORMType ormType, GenerateType generateType) {
+        return entityInstanceCreator.createInstance(ormType, type, generateType);
     }
 }

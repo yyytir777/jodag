@@ -3,14 +3,14 @@ package jodag.generator.array;
 import jodag.generator.AbstractGenerator;
 import jodag.generator.primitive.CharacterGenerator;
 
-public class CharacterArrayGenerator extends AbstractGenerator<Character[]> {
+public class CharacterArrayGenerator extends AbstractGenerator<char[]> {
 
     private static final CharacterArrayGenerator INSTANCE = new CharacterArrayGenerator();
 
     private final CharacterGenerator charGenerator;
 
     private CharacterArrayGenerator() {
-        super("character-array", Character[].class);
+        super("character-array", char[].class);
         charGenerator = CharacterGenerator.getInstance();
     }
 
@@ -19,8 +19,8 @@ public class CharacterArrayGenerator extends AbstractGenerator<Character[]> {
     }
 
     @Override
-    public Character[] get() {
-        return new Character[]{charGenerator.get()};
+    public char[] get() {
+        return new char[]{charGenerator.get()};
     }
 
     public char[] get(int length) {

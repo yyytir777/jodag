@@ -2,6 +2,7 @@ package jodag.generator.primitive;
 
 import jodag.generator.AbstractGenerator;
 
+import java.util.List;
 import java.util.Locale;
 
 public class CharacterGenerator extends AbstractGenerator<Character> {
@@ -36,5 +37,13 @@ public class CharacterGenerator extends AbstractGenerator<Character> {
     public Character getCharacter(char min, char max) {
         int range = (max - min) + 1;
         return (char) (randomProvider.getInt(range) + min);
+    }
+
+    public Character pickFrom(List<Character> list) {
+        return list.get(randomProvider.getInt(list.size()));
+    }
+
+    public Character pickFrom(Character[] characters) {
+        return characters[randomProvider.getInt(characters.length)];
     }
 }

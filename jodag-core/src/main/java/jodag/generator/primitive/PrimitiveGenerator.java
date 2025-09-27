@@ -95,11 +95,11 @@ public class PrimitiveGenerator {
     }
 
     public Integer getPositiveInteger() {
-        return integerGenerator.getInteger(1, Integer.MAX_VALUE);
+        return integerGenerator.getInteger(0, Integer.MAX_VALUE);
     }
 
     public Integer getNegativeInteger() {
-        return integerGenerator.getInteger(Integer.MIN_VALUE, -1);
+        return integerGenerator.getInteger(Integer.MIN_VALUE, 0);
     }
 
     public Integer getEvenInteger() {

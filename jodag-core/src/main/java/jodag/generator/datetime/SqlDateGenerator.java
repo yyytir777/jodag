@@ -23,6 +23,15 @@ public class SqlDateGenerator extends AbstractGenerator<Date> {
         return new Date(System.currentTimeMillis());
     }
 
+    @SuppressWarnings("unchecked")
+    public <T> T get(Class<?> type) {
+        if (type.equals(java.sql.Date.class)) return (T) getDate();
+        if (type.equals(java.sql.Time.class)) return (T) getTime();
+        if (type.equals(java.sql.Timestamp.class)) return (T) getTimestamp();
+
+        throw new UnsupportedOperationException("지원하지 않는 타입");
+    }
+
     public Date getDate() {
         return new Date(System.currentTimeMillis());
     }

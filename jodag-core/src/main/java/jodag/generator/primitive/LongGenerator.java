@@ -2,6 +2,9 @@ package jodag.generator.primitive;
 
 import jodag.generator.AbstractGenerator;
 
+import java.util.Arrays;
+import java.util.List;
+
 
 public class LongGenerator extends AbstractGenerator<Long> {
 
@@ -42,5 +45,23 @@ public class LongGenerator extends AbstractGenerator<Long> {
         long value = getLong();
         if(value == Long.MAX_VALUE) value--;
         return (value % 2 != 0) ? value : value + 1;
+    }
+
+    public Long getPositiveLong() {
+        return getLong(0L, Long.MAX_VALUE);
+    }
+
+
+    public Long getNegativeLong() {
+        return getLong(Long.MIN_VALUE, 0L);
+    }
+
+    public Long pickFrom(List<Long> list) {
+        return list.get(randomProvider.getNextIdx(list.size()));
+    }
+
+
+    public Long pickFrom(Long[] longs) {
+        return longs[randomProvider.getNextIdx(longs.length)];
     }
 }

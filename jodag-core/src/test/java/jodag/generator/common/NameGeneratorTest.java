@@ -1,21 +1,20 @@
 package jodag.generator.common;
 
-import jodag.generator.GeneratorFactory;
+import jodag.generator.factory.GeneratorFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.regex.Pattern;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class NameGeneratorTest {
+
+    private final GeneratorFactory generatorFactory = new GeneratorFactory();
 
     @Test
     @DisplayName("GeneratorFactory를 통해 가져온 NameGenerator가 해당 클래스인지 확인")
     void get_instance() {
         // given & when
-        NameGenerator nameGenerator = GeneratorFactory.name();
+        NameGenerator nameGenerator = generatorFactory.asName();
 
         // then
         assertThat(nameGenerator).isInstanceOf(NameGenerator.class);
@@ -25,8 +24,8 @@ class NameGeneratorTest {
     @DisplayName("NameGenerator는 싱글톤으로 관리")
     void nameGenerator_is_singleton() {
         // given & when
-        NameGenerator nameGenerator1 = GeneratorFactory.name();
-        NameGenerator nameGenerator2 = GeneratorFactory.name();
+        NameGenerator nameGenerator1 = generatorFactory.asName();
+        NameGenerator nameGenerator2 = generatorFactory.asName();
 
         // then
         assertThat(nameGenerator1).isNotNull();
@@ -39,7 +38,7 @@ class NameGeneratorTest {
     @DisplayName("NameGenerator에서 이름 형식의 값을 리턴")
     void get_value_from_emailGenerator() {
         // given & when
-        NameGenerator nameGenerator = GeneratorFactory.name();
+        NameGenerator nameGenerator = generatorFactory.asName();
 
         // then
         String name = nameGenerator.get();
@@ -50,7 +49,7 @@ class NameGeneratorTest {
     @DisplayName("NameGenerator에서 여러 개의 값 리턴")
     void get_values_from_nameGenerator() {
         // given & when
-        NameGenerator nameGenerator = GeneratorFactory.name();
+        NameGenerator nameGenerator = generatorFactory.asName();
 
         // then
         for(int i = 0; i < 1000; i++) {

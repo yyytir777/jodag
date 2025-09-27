@@ -1,0 +1,11 @@
+<!-- resources/mapper/ChildMapper.xml -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jodag.mybatis.associations.ChildMapper">
+
+    <resultMap id="ChildResultMap" type="jodag.mybatis.associations.Child">
+        <id property="id" column="c_id"/>
+        <result property="name" column="c_name"/>
+        <association property="parent" resultMap="ParentResultMap"/>
+    </resultMap>
+</mapper>

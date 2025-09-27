@@ -2,6 +2,8 @@ package jodag.generator.primitive;
 
 import jodag.generator.AbstractGenerator;
 
+import java.util.List;
+
 
 public class ShortGenerator extends AbstractGenerator<Short> {
 
@@ -38,5 +40,21 @@ public class ShortGenerator extends AbstractGenerator<Short> {
         short value = getShort();
         if(value == Short.MAX_VALUE) value--;
         return (value % 2 != 0) ? value : (short) (value + 1);
+    }
+
+    public Short getPositiveShort() {
+        return getShort((short) 0, Short.MAX_VALUE);
+    }
+
+    public Short getNegativeShort() {
+        return  getShort(Short.MIN_VALUE, (short) 0);
+    }
+
+    public Short pickFrom(List<Short> list) {
+        return list.get(randomProvider.getNextIdx(list.size()));
+    }
+
+    public Short pickFrom(Short[] shorts) {
+        return shorts[randomProvider.getNextIdx(shorts.length)];
     }
 }

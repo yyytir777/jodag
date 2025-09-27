@@ -23,6 +23,16 @@ public class DateTimeGenerator extends AbstractGenerator<Temporal> {
         return LocalDateTime.now();
     }
 
+    public Temporal get(Class<?> type) {
+        if (type.equals(LocalDate.class)) return getLocalDate();
+        if (type.equals(LocalTime.class)) return getLocalTime();
+        if (type.equals(LocalDateTime.class)) return getLocalDateTime();
+        if (type.equals(OffsetTime.class)) return getOffsetTime();
+        if (type.equals(OffsetDateTime.class)) return getOffsetDateTime();
+        if (type.equals(Instant.class)) return getInstant();
+        throw new UnsupportedOperationException("지원하지 않는 타입");
+    }
+
     public LocalDate getLocalDate() {
         return LocalDate.now();
     }

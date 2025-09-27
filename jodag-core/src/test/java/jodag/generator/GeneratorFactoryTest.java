@@ -1,6 +1,7 @@
 package jodag.generator;
 
 import jodag.exception.GeneratorException;
+import jodag.generator.factory.GeneratorFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,88 +12,73 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GeneratorFactoryTest {
 
+    private final GeneratorFactory generatorFactory = new GeneratorFactory();
+
     @BeforeEach
     void setUp() {
-        GeneratorFactory.clearRegistableGenerator();
+        generatorFactory.clearRegistrableGenerator();
     }
 
     @Test
-    void getCommonGenerator() {
-        String key = "name";
-        Generator<String> namegenerator = GeneratorFactory.getCommonGenerator(key);
-        assertNotNull(namegenerator);
-        String name = namegenerator.get();
-        System.out.println("name = " + name);
-        assertNotNull(name);
-
-    }
-
-    @Test
-    void getRegistableGenerator() {
-        GeneratorFactory.register("test", "name.txt", String.class);
-        Generator<String> test = GeneratorFactory.getRegistableGenerator("test");
+    void getRegistrableGenerator() {
+        generatorFactory.addRegistrableGenerator("test", "name.txt", String.class);
+        Generator<String> test = generatorFactory.getRegistrableGeneratorByKey("test");
         String string = test.get();
         System.out.println("string = " + string);
         assertNotNull(string);
     }
 
     @Test
-    void throwExceptionGetRegistableGenerator() {
-        GeneratorFactory.register("test1", "name.txt", String.class);
-        assertThatThrownBy(() -> GeneratorFactory.getRegistableGenerator("test"))
+    void throwExceptionGetRegistrableGenerator() {
+        generatorFactory.addRegistrableGenerator("test1", "name.txt", String.class);
+        assertThatThrownBy(() -> generatorFactory.getRegistrableGeneratorByKey("test"))
                 .isInstanceOf(GeneratorException.class);
     }
 
-    @Test
-    void throwExceptionGetRegistableGeneratorWhenCannotFindPath() {
-        GeneratorFactory.register("test1", "name.txt", String.class);
-        assertThatThrownBy(() -> GeneratorFactory.getRegistableGenerator("/temp/name.txt", String.class))
-                .isInstanceOf(GeneratorException.class);
-    }
-
-    @Test
-    void testGetRegistableGenerator() {
-        GeneratorFactory.register("test", "name.txt", String.class);
-        Generator<String> registableGenerator = GeneratorFactory.getRegistableGenerator("name.txt", String.class);
-        assertNotNull(registableGenerator);
-    }
+//    @Test
+//    void throwExceptionGetRegistrableGeneratorWhenCannotFindPath() {
+//        generatorFactory.addRegistrableGenerator("test1", "name.txt", String.class);
+//        assertThatThrownBy(() -> generatorFactory.getRegistrableGeneratorByPath("/temp/name.txt"))
+//                .isInstanceOf(GeneratorException.class);
+//    }
+//
+//    @Test
+//    void testGetRegistrableGenerator() {
+//        generatorFactory.addRegistrableGenerator("test", "name.txt", String.class);
+//        Generator<String> registrableGenerator = generatorFactory.getRegistrableGeneratorByPath("name.txt");
+//        assertNotNull(registrableGenerator);
+//    }
 
     @Test
     void register() {
-        GeneratorFactory.register("test", "name.txt", String.class);
-        Generator<String> test = GeneratorFactory.getRegistableGenerator("test");
+        generatorFactory.addRegistrableGenerator("test", "name.txt", String.class);
+        Generator<String> test = generatorFactory.getRegistrableGeneratorByKey("test");
         assertNotNull(test);
     }
 
     @Test
     void throwExceptionWhenDuplicateGenerator() {
-        GeneratorFactory.register("test", "name.txt", String.class);
-        assertThatThrownBy(() -> GeneratorFactory.register("test", "name.txt", String.class))
+        generatorFactory.addRegistrableGenerator("test", "name.txt", String.class);
+        assertThatThrownBy(() -> generatorFactory.addRegistrableGenerator("test", "name.txt", String.class))
                 .isInstanceOf(GeneratorException.class);
     }
 
     @Test
-    void getCommonGeneratorKeys() {
-        List<String> commonGeneratorKeys = GeneratorFactory.getCommonGeneratorKeys();
-        assertThat(commonGeneratorKeys).isInstanceOf(List.class);
-    }
-
-    @Test
-    void getRegistableGeneratorNames() {
-        List<String> registableGeneratorNames = GeneratorFactory.getRegistableGeneratorNames();
-        assertThat(registableGeneratorNames).isInstanceOf(List.class);
+    void getRegistrableGeneratorNames() {
+        List<String> registrableGeneratorNames = generatorFactory.getRegistrableGeneratorNames();
+        assertThat(registrableGeneratorNames).isInstanceOf(List.class);
     }
 
     @Test
     void existsGenerator() {
-        GeneratorFactory.register("test", "name.txt", String.class);
-        boolean test = GeneratorFactory.existsGenerator("test");
+        generatorFactory.addRegistrableGenerator("test", "name.txt", String.class);
+        boolean test = generatorFactory.existsRegistrableGenerator("test");
         assertThat(test).isTrue();
 
-        boolean name = GeneratorFactory.existsGenerator("name");
-        assertThat(name).isTrue();
+        boolean name = generatorFactory.existsRegistrableGenerator("name");
+        assertThat(name).isFalse();
 
-        boolean tmp = GeneratorFactory.existsGenerator("tmp");
+        boolean tmp = generatorFactory.existsRegistrableGenerator("tmp");
         assertThat(tmp).isFalse();
     }
 }

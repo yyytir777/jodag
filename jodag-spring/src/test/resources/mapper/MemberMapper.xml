@@ -1,0 +1,42 @@
+<mapper namespace="jodag.mybatis.MemberMapper">
+
+    <resultMap id="MemberResultMap" type="jodag.mybatis.Member">
+        <id property="id" column="id"/>
+
+        <!-- primitive -->
+        <result property="name" column="user_name"/>
+        <result property="email" column="user_email"/>
+
+        <!-- java.math -->
+        <result property="balance" column="balance"/>
+        <result property="amount" column="amount"/>
+
+        <!-- java.time -->
+        <result property="localDate" column="local_date"/>
+        <result property="localTime" column="local_time"/>
+        <result property="localDateTime" column="local_datetime"/>
+        <result property="offsetDateTime" column="offset_datetime"/>
+        <result property="offsetTime" column="offset_time"/>
+        <result property="instant" column="instant"/>
+
+        <!-- java.util -->
+        <result property="date" column="date"/>
+        <result property="calendar" column="calendar"/>
+
+        <!-- java.sql -->
+        <result property="time" column="time"/>
+        <result property="sqlDate" column="sql_date"/>
+        <result property="timestamp" column="timestamp"/>
+
+        <!-- array -->
+        <result property="byteArray" column="byte_array"/>
+        <result property="charArray" column="char_array"/>
+
+        <!-- enum -->
+        <result property="type" column="member_type"/>
+
+        <!-- 1:1 관계: Member.user -->
+        <association property="user" resultMap="UserResultMap"/>
+    </resultMap>
+
+</mapper>

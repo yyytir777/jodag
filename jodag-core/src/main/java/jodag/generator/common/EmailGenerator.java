@@ -2,7 +2,7 @@ package jodag.generator.common;
 
 
 import jodag.generator.AbstractGenerator;
-import jodag.generator.StringGenerator;
+import jodag.generator.primitive.StringGenerator;
 
 import java.util.UUID;
 

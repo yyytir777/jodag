@@ -2,6 +2,8 @@ package jodag.generator.primitive;
 
 import jodag.generator.AbstractGenerator;
 
+import java.util.List;
+
 
 public class ByteGenerator extends AbstractGenerator<Byte> {
 
@@ -40,4 +42,20 @@ public class ByteGenerator extends AbstractGenerator<Byte> {
         return (byte) ((value % 2 != 0) ? value : value + 1);
     }
 
+    public Byte getPositiveByte() {
+        return getByte((byte) 0, Byte.MAX_VALUE);
+    }
+
+    public Byte getNegativeByte() {
+        return getByte(Byte.MIN_VALUE, (byte) 0);
+    }
+
+    public Byte pickFrom(List<Byte> list) {
+        return list.get(randomProvider.getNextIdx(list.size()));
+    }
+
+
+    public Byte pickFrom(Byte[] bytes) {
+        return bytes[randomProvider.getNextIdx(bytes.length)];
+    }
 }
